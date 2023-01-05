@@ -1,0 +1,39 @@
+.title{
+    font-size: 32px;
+}
+
+.stock_list, .order_list{
+    float:left;   
+}
+
+.stock_list{
+    margin-top: 10px;
+    margin-left: 450px;
+}
+
+.order_list{
+    margin-top: 10px;
+    margin-left: 930px;
+}
+
+table tbody{
+    display:block;
+    height:195px;
+    overflow-y:scroll;
+}
+
+table thead, tr{
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+
+
+table thead th{
+    background:#ccc;
+}
+
+table tbody td{
+    text-align: center;
+}
