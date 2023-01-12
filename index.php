@@ -29,6 +29,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   <input type="password" name="user-pw" id="user-pw">
   <br>
   <input type="submit" value="登入" name="submit">
+  <br>
+  <?php
+  ?>
 </form>
 
 <script>

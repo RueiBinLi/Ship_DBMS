@@ -1,24 +1,16 @@
 .title{
     font-size: 32px;
+    display: flex;
 }
 
-.stock_list, .order_list{
-    float:left;   
-}
-
-.stock_list{
-    margin-top: 10px;
-    margin-left: 450px;
-}
-
-.order_list{
-    margin-top: 10px;
-    margin-left: 930px;
+.stock_title, .search_title{
+    float:inline-start;
 }
 
 table tbody{
     display:block;
-    height:195px;
+    height:100%;
+    max-height:550px;
     overflow-y:scroll;
 }
 
@@ -27,8 +19,6 @@ table thead, tr{
     width:100%;
     table-layout:fixed;
 }
-
-
 
 table thead th{
     background:#ccc;
