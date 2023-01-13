@@ -18,6 +18,7 @@
     <a href="prepare.php">備貨單</a>
     <a href="delivery.php">出貨單</a>
     <a href="purchase.php">進貨單</a>
+    <a href="return.php">退貨單</a>
     <a href="stock.php">庫存</a>
   </div>
 
@@ -80,30 +81,49 @@
         $row = $result->fetch_assoc();
         print($row['出貨單編號']);
         ?>
+        <p style="display:inline; margin-left:3%;">出貨客戶:</p>
+        <?php
+        $sql = "SELECT 出貨備貨編號 FROM 出貨單 WHERE 出貨單編號='$deliveryNumber'";
+        $result=$link->query($sql);
+        $prepareNumber = $result->fetch_assoc();
+        $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber[出貨備貨編號]'";
+        $result=$link->query($sql);
+        $orderNumber = $result->fetch_assoc();
+        $sql = "SELECT 訂單編號 FROM 訂單明細 WHERE 訂單編號='$orderNumber[備貨訂單編號]'";
+        $result = $link->query($sql);
+        $row = $result->fetch_assoc();
+        $sql = "SELECT 訂單客戶編號 FROM 訂單 WHERE 訂單編號='$row[訂單編號]'";
+        $result=$link->query($sql);
+        $row = $result->fetch_assoc();
+        $sql = "SELECT 客戶名稱 FROM 客戶 WHERE 客戶編號='$row[訂單客戶編號]'";
+        $result=$link->query($sql);
+        $row = $result->fetch_assoc();
+        print($row['客戶名稱']);
+        ?>
         <p style="display:inline; margin-left:3%;">出貨狀態:</p>
         <?php
         $sql = "SELECT 出貨狀態 FROM 出貨單 WHERE 出貨單編號='$deliveryNumber'";
         $result=$link->query($sql);
         $row = $result->fetch_assoc();
         if($row['出貨狀態'] === '0') print('未完成');
-        else print('未完成');
+        else print('完成');
         ?>
         <p style="display:inline; margin-left:1%;">總計:</p>
         <?php
         $sql = "SELECT 出貨備貨編號 FROM 出貨單 WHERE 出貨單編號='$deliveryNumber'";
         $result=$link->query($sql);
         $prepareNumber = $result->fetch_assoc();
-        $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber'";
+        $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber[出貨備貨編號]'";
         $result=$link->query($sql);
         $orderNumber = $result->fetch_assoc();
-        $sql = "SELECT SUM(單價*數量) FROM 訂單明細 WHERE 訂單編號='$orderNumber'";
+        $sql = "SELECT SUM(單價*數量) FROM 訂單明細 WHERE 訂單編號='$orderNumber[備貨訂單編號]'";
         $result = $link->query($sql);
         $row1 = $result->fetch_assoc();
         $total = $row1['SUM(單價*數量)'];
         echo $total;
         ?>
-        <form action="finish_delivery.php" method="POST" style="display:inline; margin-left:3%;">
-          <select name="delivery_number" style="display:inline;">
+        <form action="finish_delivery.php" method="POST" style="display:inline;  margin-left:3%;">
+          <select name="delivery_number" style="display:inline;  margin-left:3%;">
           <?php
           foreach($options as $option){
           ?>
@@ -134,10 +154,10 @@
       $sql = "SELECT 出貨備貨編號 FROM 出貨單 WHERE 出貨單編號='$deliveryNumber'";
       $result=$link->query($sql);
       $prepareNumber = $result->fetch_assoc();
-      $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber'";
+      $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber[出貨備貨編號]'";
       $result=$link->query($sql);
       $orderNumber = $result->fetch_assoc();
-      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber[備貨訂單編號]';";
+      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber[備貨訂單編號]' ORDER BY `零件編號` ASC;";
       //$sql = "SELECT * from 訂單明細 WHERE 訂單編號='00000001'";
       //$sql = sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s", "零件編號,數量", "訂單明細", "訂單編號='00000001'", "零件編號 ASC");
       $result1=$link->query($sql);

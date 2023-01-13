@@ -18,6 +18,7 @@
     <a href="prepare.php">備貨單</a>
     <a href="delivery.php">出貨單</a>
     <a href="purchase.php">進貨單</a>
+    <a href="return.php">退貨單</a>
     <a href="stock.php">庫存</a>
   </div>
 
@@ -64,11 +65,11 @@
     <table id="stock_table" border="1">
       <thead style="width:98%">
         <tr>
-          <th >編號</th>
-          <th >型式</th>
-          <th >品名</th>
-          <th >規格</th>
-          <th >數量</th>
+          <th>編號</th>
+          <th>型式</th>
+          <th>品名</th>
+          <th>規格</th>
+          <th>數量</th>
         </tr>
       </thead>
       <?php

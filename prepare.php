@@ -18,6 +18,7 @@
     <a href="prepare.php">備貨單</a>
     <a href="delivery.php">出貨單</a>
     <a href="purchase.php">進貨單</a>
+    <a href="return.php">退貨單</a>
     <a href="stock.php">庫存</a>
   </div>
 
@@ -93,7 +94,7 @@
         $result=$link->query($sql);
         $row = $result->fetch_assoc();
         if($row['備貨狀態'] === '0') print('未完成');
-        else print('未完成');
+        else print('完成');
         ?>
         <form action="finish_prepare.php" method="POST" style="display:inline; margin-left:3%;">
           <select name="prepare_number" style="display:inline;">
@@ -126,7 +127,7 @@
       $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨單編號='$prepareNumber'";
       $result=$link->query($sql);
       $orderNumber = $result->fetch_assoc();
-      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber[備貨訂單編號]';";
+      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber[備貨訂單編號]' ORDER BY `零件編號` ASC;";
       //$sql = "SELECT * from 訂單明細 WHERE 訂單編號='00000001'";
       //$sql = sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s", "零件編號,數量", "訂單明細", "訂單編號='00000001'", "零件編號 ASC");
       $result1=$link->query($sql);

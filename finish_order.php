@@ -17,7 +17,7 @@
             $link->query($sql);
             echo "
             <script>
-            alert('此訂單已完成將新增新的備貨單');
+            alert('此訂單已完成並將新增新的備貨單');
             window.history.back();
             </script>";
         }

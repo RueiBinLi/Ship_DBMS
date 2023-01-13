@@ -18,6 +18,7 @@
     <a href="prepare.php">備貨單</a>
     <a href="delivery.php">出貨單</a>
     <a href="purchase.php">進貨單</a>
+    <a href="return.php">退貨單</a>
     <a href="stock.php">庫存</a>
   </div>
 
@@ -37,6 +38,9 @@
         <?php
           $link=require_once "config.php";
 
+          $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨狀態='0'";
+          $result = $link->query($sql);
+          $row = $result->fetch_assoc();
           $sql = "SELECT `訂單編號` FROM `訂單` ORDER BY `訂單編號` DESC;";
           $result = $link->query($sql);
 
@@ -79,6 +83,9 @@
     <div style="display:inline;">
         <p style="margin-left:5%; display:inline;">訂單</p>
           <?php
+          $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨狀態='0'";
+          $result = $link->query($sql);
+          $row = $result->fetch_assoc();
           $sql = "SELECT `訂單編號` FROM `訂單` ORDER BY `訂單編號` DESC;";
           $result = $link->query($sql);
 
@@ -199,7 +206,7 @@
         $orderNumber = $_POST["order_number"];
       }
       //$link=require_once "config.php";
-      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber';";
+      $sql = "SELECT * FROM `訂單明細` WHERE `訂單編號` = '$orderNumber' ORDER BY `零件編號` ASC;";
       //$sql = "SELECT * from 訂單明細 WHERE 訂單編號='00000001'";
       //$sql = sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s", "零件編號,數量", "訂單明細", "訂單編號='00000001'", "零件編號 ASC");
       $result1=$link->query($sql);
