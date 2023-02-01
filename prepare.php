@@ -27,15 +27,17 @@
       <p>備貨單</p>
           <form action="#" method="POST" style="display:inline">
           <select name="status" style="display:inline">
-            <option value="finish">備貨完成</option>
             <option value="unfinish">備貨未完成</option>
+            <option value="finish">備貨完成</option>
           </select>
           <input type="submit" name="if_finish" style="display:inline">
           </form>
           <?php
           if(isset($_POST['if_finish'])) $status = $_POST['status'];
           else $status = 'unfinish';
+
           $link=require_once "config.php";
+          
           if($status == 'finish') $sql = "SELECT `備貨單編號` FROM `備貨單` WHERE `備貨狀態`='1' ORDER BY `備貨單編號` DESC;";
           else $sql = "SELECT `備貨單編號` FROM `備貨單` WHERE `備貨狀態`='0' ORDER BY `備貨單編號` DESC;";
           $result = $link->query($sql);

@@ -123,7 +123,7 @@
         $row = $result->fetch_assoc();
         print($row['日期']);
         ?>
-        <p style="display:inline; margin-left:1%;">地址:</p>
+        <p style="display:inline; margin-left:55%;">地址:</p>
         <?php
         $sql = "SELECT 進貨公司編號 FROM 進貨單 WHERE 進貨單編號='$purchaseNumber'";
         $result=$link->query($sql);
@@ -143,7 +143,7 @@
         $row = $result->fetch_assoc();
         print($row['進貨公司電話']);
         ?>
-        <p style="display:inline; margin-left:50%;">進貨單編號:</p>
+        <p style="display:inline; margin-left:1%;">進貨單編號:</p>
         <?php
         $sql = "SELECT 進貨單編號 FROM 進貨單 WHERE 進貨單編號='$purchaseNumber'";
         $result=$link->query($sql);

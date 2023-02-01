@@ -5,6 +5,8 @@
     $amount=$_POST["components_amount"];
     $orderNumber=$_POST["order_number"];
 
+    
+
     if($orderNumber && $amount && $number){
         //$sql = "SELECT * FROM 訂單明細 WHERE 訂單編號=$orderNumber AND 零件編號=$number";
         $sql = "SELECT `零件編號` FROM `訂單明細` WHERE `訂單編號`='$orderNumber' AND `零件編號`='$number';";
@@ -25,7 +27,7 @@
                     $sql = "SELECT 數量 FROM 訂單明細 WHERE 訂單編號='$orderNumber' AND 零件編號='$number'";
                     $result = $link->query($sql);
                     $componentAmount = $result->fetch_assoc();
-                    if($componentAmount['數量'] > $calc_amount){
+                    if($componentAmount['數量'] >= $calc_amount){
                         $sql = "UPDATE 退貨單明細 SET 數量='$calc_amount' WHERE 零件編號='$number'";
                         $link->query($sql);
                         header("location:return.php");
@@ -43,7 +45,7 @@
                     $result = $link->query($sql);
                     $componentAmount = $result->fetch_assoc();
 
-                    if($componentAmount['數量'] > $amount){
+                    if($componentAmount['數量'] >= $amount){
                         $sql = "SELECT 退貨單明細編號 FROM 退貨單明細 ORDER BY 退貨單明細編號 DESC LIMIT 1";
                         $result = $link->query($sql);
                         $order_detail_nubmer = $result->fetch_assoc();
@@ -69,7 +71,7 @@
                 //echo $componentAmount['數量'];
                 echo $amount;
 
-                if($componentAmount['數量'] > $amount){ 
+                if($componentAmount['數量'] >= $amount){ 
                     $sql = "SELECT 退貨單編號 FROM 退貨單 ORDER BY 退貨單編號 DESC LIMIT 1";
                     $result = $link->query($sql);
                     $row = $result->fetch_assoc();
@@ -103,7 +105,7 @@
             </script>";
         }
 
-        //header("location:return.php");
+       // header("location:return.php");
     }
     else if(!$number && $orderNumber && $amount){
         echo "

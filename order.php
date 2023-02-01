@@ -81,6 +81,7 @@
         </form>
     </div>
     <div style="display:inline;">
+      
         <p style="margin-left:5%; display:inline;">訂單</p>
           <?php
           $sql = "SELECT 備貨訂單編號 FROM 備貨單 WHERE 備貨狀態='0'";
@@ -131,7 +132,7 @@
         $row = $result->fetch_assoc();
         print($row['日期']);
         ?>
-        <p style="display:inline; margin-left:1%;">訂單編號:</p>
+        <p style="display:inline; margin-left:67%;">訂單編號:</p>
         <?php
         $sql = "SELECT 訂單編號 FROM 訂單 WHERE 訂單編號='$orderNumber'";
         $result=$link->query($sql);

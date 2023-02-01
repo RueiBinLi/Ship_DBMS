@@ -104,20 +104,10 @@
             ?>
     </div>
     <div style="display:inline;">
-        <form action="#" method="POST" style="display:inline; margin-left:2%;">
-          <select name="status" style="display:inline">
-            <option value="unfinish">退貨未完成</option>
-            <option value="finish">退貨完成</option>
-          </select>
-          <input type="submit" name="if_finish" style="display:inline">
-        </form>
         <p style="margin-left:1%; display:inline;">退貨單</p>
           <?php
-          if(isset($_POST['if_finish'])) $status = $_POST['status'];
-          else $status = 'unfinish';
 
-          if($status == 'finish') $sql = "SELECT `退貨單編號` FROM `退貨單` WHERE `退貨狀態`='1' ORDER BY `退貨單編號` DESC;";
-          else $sql = "SELECT `退貨單編號` FROM `退貨單` WHERE `退貨狀態`='0' ORDER BY `退貨單編號` DESC;";
+          $sql = "SELECT `退貨單編號` FROM `退貨單` ORDER BY `退貨單編號` DESC;";
           $result = $link->query($sql);
 
           if($result->num_rows>0){
@@ -136,25 +126,29 @@
           </select>
           <input type="submit" name="confirm" value="確定" style="display:inline">
           </form>
-        <p style="display:inline; margin-left:1%;">客戶:</p>
+          <p style="display:inline; margin-left:1%;">編號:</p>
         <?php
         if(isset($_POST['confirm'])){
-          $returnNumber = $_POST["return_number"];
-          $sql = "SELECT 退貨訂單編號 FROM 退貨單 WHERE 退貨單編號='$returnNumber'";
-          $result = $link->query($sql);
-          $row = $result->fetch_assoc();
-          $orderNumber = $row['退貨訂單編號'];
-        }
-        else {
-          $sql = "SELECT 退貨訂單編號,退貨單編號 FROM 退貨單 ORDER BY 退貨單編號 DESC LIMIT 1";
-          $result = $link->query($sql);
-          $row = $result->fetch_assoc();
-          $returnNumber = $row['退貨單編號'];
-          $sql = "SELECT 訂單編號 FROM 訂單 WHERE 訂單編號='$row[退貨訂單編號]'";
-          $result = $link->query($sql);
-          $row = $result->fetch_assoc();
-          $orderNumber = $row['訂單編號'];
-        }
+            $returnNumber = $_POST["return_number"];
+            $sql = "SELECT 退貨訂單編號 FROM 退貨單 WHERE 退貨單編號='$returnNumber'";
+            $result = $link->query($sql);
+            $row = $result->fetch_assoc();
+            $orderNumber = $row['退貨訂單編號'];
+          }
+          else {
+            $sql = "SELECT 退貨訂單編號,退貨單編號 FROM 退貨單 ORDER BY 退貨單編號 DESC LIMIT 1";
+            $result = $link->query($sql);
+            $row = $result->fetch_assoc();
+            $returnNumber = $row['退貨單編號'];
+            $sql = "SELECT 訂單編號 FROM 訂單 WHERE 訂單編號='$row[退貨訂單編號]'";
+            $result = $link->query($sql);
+            $row = $result->fetch_assoc();
+            $orderNumber = $row['訂單編號'];
+          }
+        print($returnNumber);
+        ?>
+        <p style="display:inline; margin-left:1%;">客戶:</p>
+        <?php
         $sql = "SELECT 訂單客戶編號 FROM 訂單 WHERE 訂單編號='$orderNumber'";
         $result=$link->query($sql);
         $row = $result->fetch_assoc();
